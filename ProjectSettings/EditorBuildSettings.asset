@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/SelectLanguage.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/MainMenu.unity
+    guid: 42071801f3aa99a4eaa03f6c3a7dd2be
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/ModelSelection.unity
+    guid: b2f65165459918f4da12a6f788d6b31c
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/Mode.unity
+    guid: 2c0beb6d050df0d40a7fb9ba6ba0ef5a
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/HajjScene.unity
+    guid: bfa30651316a9bb459dbc6c325e0b038
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/UmrahScene.unity
+    guid: fa343e2e4bc4c1245823c6b9704741b7
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/Arafat.unity
+    guid: 5c9568e27c9ac7f4da2023b9d1699125
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/Mina.unity
+    guid: 794abf5bba24c2745ada8fc51f84853a
+  - enabled: 1
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/Muzdalifa.unity
+    guid: a36738d56d46c1d4188ba0c0c4ad2a27
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: d90261dceacc2e24682d5d0db86e91ac, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 9c22b58eff3576748a2676a5405953e4, type: 2}
