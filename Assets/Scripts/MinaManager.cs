@@ -8,11 +8,15 @@ public class SequenceManager : MonoBehaviour
     public GameObject namazTimingPanel;
     public GameObject wazuPanel;
     public GameObject namazPanel;
+    public GameObject finalPanel; // The final panel to be displayed after Namaz
 
     public Button minaCloseButton;
     public Button namazTimingCloseButton;
     public Button wazuCloseButton;
     public Button namazCloseButton;
+    public Button restartButton; // Restart button in the final panel
+    public Button homeButton;    // Home button in the final panel
+    public Button closeButton;   // Close button in the final panel
 
     public AudioSource azanAudioSource;
     public Transform[] beacons;
@@ -23,33 +27,45 @@ public class SequenceManager : MonoBehaviour
     private int currentBeaconIndex = 0;
     private bool reachedBeacon = false;
 
+    private bool minaClosed = false;
+    private bool namazTimingClosed = false;
+
     void Start()
     {
+        // Initialize sequence
         StartCoroutine(StartSequence());
 
-        // Assign close button functionality for each panel
-        minaCloseButton.onClick.AddListener(CloseMinaPanel);
-        namazTimingCloseButton.onClick.AddListener(CloseNamazTimingPanel);
-        wazuCloseButton.onClick.AddListener(CloseWazuPanel);
-        namazCloseButton.onClick.AddListener(CloseNamazPanel);
+        // Assign close button events
+        minaCloseButton.onClick.AddListener(() => minaClosed = true);
+        namazTimingCloseButton.onClick.AddListener(() => namazTimingClosed = true);
+        wazuCloseButton.onClick.AddListener(OnWazuClosed);
+        namazCloseButton.onClick.AddListener(OnNamazClosed);
+
+        // Assign final panel buttons
+        restartButton.onClick.AddListener(RestartSequence);
+        homeButton.onClick.AddListener(GoToHome);
+        closeButton.onClick.AddListener(CloseScene);
     }
 
     IEnumerator StartSequence()
     {
-        // Step 1: Show Mina Panel, then hide it after 3 seconds
-        minaPanel.SetActive(true);
-        yield return new WaitForSeconds(3);
-        minaPanel.SetActive(false);
+        Debug.Log("Starting sequence...");
 
-        // Step 2: Show Namaz Timing Panel, then hide it after 3 seconds
+        // Step 1: Show Mina Panel and wait for it to close
+        minaPanel.SetActive(true);
+        Debug.Log("Mina panel active, waiting to close...");
+        yield return new WaitUntil(() => minaClosed);
+
+        // Step 2: Show Namaz Timing Panel and wait for it to close
         namazTimingPanel.SetActive(true);
-        yield return new WaitForSeconds(3);
-        namazTimingPanel.SetActive(false);
+        Debug.Log("Namaz Timing panel active, waiting to close...");
+        yield return new WaitUntil(() => namazTimingClosed);
 
         // Step 3: Activate indicator and start azan sound
         indicator.SetActive(true);
         azanAudioSource.Play();
         MoveIndicatorToBeacon();
+        Debug.Log("Indicator and azan activated.");
 
         // Start coroutine to stop azan audio after 22 seconds
         StartCoroutine(StopAzanAfterDelay(22f));
@@ -64,10 +80,8 @@ public class SequenceManager : MonoBehaviour
 
     void Update()
     {
-        // Keep moving the indicator to the current beacon's position
         MoveIndicatorToBeacon();
 
-        // Check if the player has reached the current beacon
         if (!reachedBeacon && Vector3.Distance(player.position, beacons[currentBeaconIndex].position) < 1.5f)
         {
             reachedBeacon = true;
@@ -77,7 +91,7 @@ public class SequenceManager : MonoBehaviour
 
     void MoveIndicatorToBeacon()
     {
-        if (beacons.Length == 0 || player == null)
+        if (beacons.Length == 0 || player == null || currentBeaconIndex >= beacons.Length)
             return;
 
         Vector3 abovePlayerPosition = player.position + Vector3.up * indicatorHeightOffset;
@@ -97,30 +111,22 @@ public class SequenceManager : MonoBehaviour
         if (currentBeaconIndex == 0)
         {
             Debug.Log("Reached first beacon, showing Wazu panel.");
-            StartCoroutine(ShowPanelFor3Seconds(wazuPanel));
+            wazuPanel.SetActive(true);
         }
         else if (currentBeaconIndex == 1)
         {
             Debug.Log("Reached second beacon, showing Namaz panel.");
-            StartCoroutine(ShowPanelFor3Seconds(namazPanel));
+            namazPanel.SetActive(true);
         }
     }
 
-    IEnumerator ShowPanelFor3Seconds(GameObject panel)
+    void OnWazuClosed()
     {
-        panel.SetActive(true);
-        Debug.Log(panel.name + " is now active.");
-        yield return new WaitForSeconds(3);
+        wazuPanel.SetActive(false);
 
-        panel.SetActive(false);
-        Debug.Log(panel.name + " is now inactive.");
-
-        // Move to the next beacon if available
-        beacons[currentBeaconIndex].gameObject.SetActive(false);
+        // Move to the next beacon and re-enable indicator
         currentBeaconIndex++;
         reachedBeacon = false;
-
-        // Reactivate indicator if there are more beacons to navigate
         if (currentBeaconIndex < beacons.Length)
         {
             indicator.SetActive(true);
@@ -128,24 +134,37 @@ public class SequenceManager : MonoBehaviour
         }
     }
 
-    // Separate close functions for each panel
-    void CloseMinaPanel()
-    {
-        minaPanel.SetActive(false);
-    }
-
-    void CloseNamazTimingPanel()
-    {
-        namazTimingPanel.SetActive(false);
-    }
-
-    void CloseWazuPanel()
-    {
-        wazuPanel.SetActive(false);
-    }
-
-    void CloseNamazPanel()
+    void OnNamazClosed()
     {
         namazPanel.SetActive(false);
+
+        // Show the final panel after Namaz panel is closed
+        Debug.Log("Sequence completed.");
+        finalPanel.SetActive(true);
+    }
+
+    // Final Panel button actions
+    void RestartSequence()
+    {
+        Debug.Log("Restarting sequence...");
+        // Reset sequence by hiding the final panel and restarting the flow
+        finalPanel.SetActive(false);
+        minaClosed = false;
+        namazTimingClosed = false;
+        StartCoroutine(StartSequence());
+    }
+
+    void GoToHome()
+    {
+        Debug.Log("Returning to home...");
+        // Logic for going to home (e.g., load a home scene or reset the game)
+        // SceneManager.LoadScene("HomeScene");
+    }
+
+    void CloseScene()
+    {
+        Debug.Log("Closing scene...");
+        // Logic for closing the scene or application
+        Application.Quit();
     }
 }
