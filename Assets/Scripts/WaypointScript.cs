@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class WaypointScript : MonoBehaviour
 {
-    public Transform[] targets;  // Array of target transforms (for two targets)
+    public Transform[] targets;  // Array of target transforms (Safa and Marwa)
     public float rotationSpeed;
-    public float movementSpeed = 5f;  // Speed of movement
+    public float movementSpeed = 6f;  // Speed of movement
     public float arrivalThreshold = 1.5f; // Distance to consider the target reached
+    public GameObject indicator; // Indicator to point to target
 
     private int currentTargetIndex = 0; // Track the current target
 
     void Start()
     {
-        // Optional: Set the initial position if you want to start at the first target
         if (targets.Length > 0)
         {
             transform.position = targets[0].position;
@@ -22,39 +22,40 @@ public class WaypointScript : MonoBehaviour
 
     void Update()
     {
-        if (targets.Length == 0) return; // Ensure that there are targets assigned
+        if (targets.Length == 0 || indicator == null) return;
 
-        // Rotate towards the current target
         RotateTowardsTarget();
-
-        // Move towards the current target
         MoveTowardsTarget();
 
-        // Check if the object has reached the target
+        // Check if the target is reached
         if (Vector3.Distance(transform.position, targets[currentTargetIndex].position) < arrivalThreshold)
         {
-            // Switch to the next target
             currentTargetIndex++;
-
-            // If all targets are reached, reset to the first target (loop)
             if (currentTargetIndex >= targets.Length)
             {
-                currentTargetIndex = 0; // Loop back to the first target
+                currentTargetIndex = 0; // Loop back if all targets are visited
             }
         }
     }
 
     void RotateTowardsTarget()
     {
-        // Rotate towards the current target
-        Vector3 direction = (targets[currentTargetIndex].position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        Vector3 direction = (targets[currentTargetIndex].position - indicator.transform.position).normalized;
+
+        // If close to the target, set the indicator to point downwards
+        if (Vector3.Distance(indicator.transform.position, targets[currentTargetIndex].position) < arrivalThreshold)
+        {
+            indicator.transform.rotation = Quaternion.Euler(90f, 0f, 0f); // Downward rotation
+        }
+        else
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            indicator.transform.rotation = Quaternion.Slerp(indicator.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        }
     }
 
     void MoveTowardsTarget()
     {
-        // Move towards the target
         Vector3 direction = (targets[currentTargetIndex].position - transform.position).normalized;
         transform.position += direction * movementSpeed * Time.deltaTime;
     }

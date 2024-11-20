@@ -3,17 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    // Called when Hajj button is pressed
-    public void OnHajjButtonPressed()
+  
+
+    // Load Hajj level and update the GameData
+    public void LoadHajjLevel()
     {
-        // Load the Hajj scene
+        GameData.CurrentMainLevel = "Hajj";
         SceneManager.LoadScene("HajjScene");
     }
 
-    // Called when Umrah button is pressed
-    public void OnUmrahButtonPressed()
+    // Load Umrah level and update the GameData
+    public void LoadUmrahLevel()
     {
-        // Load the Umrah scene
+        GameData.CurrentMainLevel = "Umrah";
         SceneManager.LoadScene("UmrahScene");
     }
 }
+

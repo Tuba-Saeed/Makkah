@@ -88,6 +88,6 @@ public class ArafatController : MonoBehaviour
 
     public void OnFinalPanelCancelButton()
     {
-        finalPanel.SetActive(false);  // Hide final panel
+        Application.Quit();
     }
 }

@@ -1,26 +1,36 @@
 using UnityEngine;
 
-public class TargetReached : MonoBehaviour
+public class TargetReachedHandler : MonoBehaviour  // Updated class name
 {
-    public GameObject wazuMessage;  // Assign the Wazu message UI in Inspector
-    public GameObject indicator;     // Assign the indicator in Inspector
-    public GameObject beacon;        // Assign the beacon in Inspector
+    [Header("UI and Indicators")]
+    public GameObject wazuMessageUI;  // Renamed variable
+    public GameObject indicatorObject;  // Renamed variable
+    public GameObject beaconObject;  // Renamed variable
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))  // Assuming your player has the "Player" tag
+        // Check if the player has entered the trigger area
+        if (other.CompareTag("Player"))
         {
-            // Show the Wazu message
-            wazuMessage.SetActive(true);
-
-            // Hide the indicator and beacon
-            if (indicator != null)
+            // Activate the Wazu message UI
+            if (wazuMessageUI != null)
             {
-                indicator.SetActive(false);
+                wazuMessageUI.SetActive(true);
+                Debug.Log("Wazu message displayed.");
             }
-            if (beacon != null)
+
+            // Hide the indicator
+            if (indicatorObject != null)
             {
-                beacon.SetActive(false);
+                indicatorObject.SetActive(false);
+                Debug.Log("Indicator hidden.");
+            }
+
+            // Hide the beacon
+            if (beaconObject != null)
+            {
+                beaconObject.SetActive(false);
+                Debug.Log("Beacon hidden.");
             }
         }
     }

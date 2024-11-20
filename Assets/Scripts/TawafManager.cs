@@ -1,126 +1,146 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 public class TawafManager : MonoBehaviour
 {
     [Header("Panels")]
-    public GameObject tawafInstructionPanel;
+    public GameObject kabainfoPanel;
     public GameObject completionPanel;
-    public GameObject finalOptionsPanel;
-    public float beaconRadius = 2.0f;
+    public GameObject finalPanel;
+    public Text roundText;
 
-    [Header("Objects")]
-    public GameObject indicator;
+    [Header("Beacon and Character")]
     public GameObject beacon;
     public GameObject character;
 
-    [Header("Settings")]
-    public Vector3 indicatorOffset = new Vector3(0, 2f, 0); // Offset for the indicator
-    public int totalRounds = 7; // Total number of rounds for Tawaf
+    [Header("Indicator")]
+    public GameObject indicator;
+    public Vector3 indicatorOffset = new Vector3(0, 2f, 0);
 
-    private int completedRounds = 0; // Number of completed rounds
-    private bool isMoving = false;  // Is the character moving?
-    private HashSet<Vector3> checkpoints = new HashSet<Vector3>(); // To store unique beacon entries
+    [Header("Settings")]
+    public float beaconRadius = 2.0f;
+    public int totalRounds = 7;
+
+    private int currentRound = 0;
+    private bool isMoving = false;
+    private bool tawafCompleted = false;
+    private bool wasInsideBeacon = false;
 
     void Start()
     {
-        // Initialize panels and objects
-        tawafInstructionPanel.SetActive(true);
+        // Initialize UI and objects
+        kabainfoPanel.SetActive(true);
         completionPanel.SetActive(false);
-        finalOptionsPanel.SetActive(false);
+        finalPanel.SetActive(false);
 
         if (indicator != null)
-            indicator.SetActive(false); // Hide the indicator initially
+        {
+            indicator.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Indicator is not assigned in the Inspector.");
+        }
 
-        if (beacon != null)
-            beacon.SetActive(true); // Show the beacon at the start
-
-        Debug.Log("TawafManager Initialized. Waiting to start Tawaf.");
+        if (roundText != null)
+        {
+            roundText.text = "Rounds: 0 / " + totalRounds;
+        }
+        else
+        {
+            Debug.LogError("RoundText is not assigned in the Inspector.");
+        }
     }
 
-    public void StartTawaf()
+    public void CloseInfoPanel()
     {
-        // Start the Tawaf process
-        tawafInstructionPanel.SetActive(false);
+        kabainfoPanel.SetActive(false);
         isMoving = true;
 
         if (indicator != null)
-            indicator.SetActive(true); // Show the indicator
-
-        Debug.Log("Tawaf Started. Move your character to begin rounds.");
+        {
+            indicator.SetActive(true);
+            Debug.Log("Indicator activated.");
+        }
+        else
+        {
+            Debug.LogError("Indicator is not assigned.");
+        }
     }
 
     void Update()
     {
-        if (isMoving)
+        if (isMoving && !tawafCompleted)
         {
-            // Check if the character is inside the beacon
-            if (beacon != null && IsCharacterInsideBeacon())
+            if (character != null && beacon != null)
             {
-                completedRounds++;
+                CheckBeaconProximity();
+                UpdateIndicatorPosition();
+            }
+            else
+            {
+                Debug.LogError("Character or Beacon is not assigned.");
+            }
+        }
+    }
 
-                // Log the number of completed rounds to the console
-                Debug.Log("Completed Round: " + completedRounds);
+    void CheckBeaconProximity()
+    {
+        float distance = Vector3.Distance(character.transform.position, beacon.transform.position);
+        Debug.Log("Character-Beacon Distance: " + distance);
 
-                // Reset character's position to start the next round
-                character.transform.position = beacon.transform.position;
+        if (distance <= beaconRadius)
+        {
+            if (!wasInsideBeacon)
+            {
+                wasInsideBeacon = true;
+                Debug.Log("Character entered beacon area.");
+            }
+        }
+        else
+        {
+            if (wasInsideBeacon)
+            {
+                wasInsideBeacon = false;
+                currentRound++;
+                Debug.Log("Completed Round: " + currentRound);
+                UpdateRoundText();
 
-                // Check if Tawaf is complete
-                if (completedRounds >= totalRounds)
+                if (currentRound >= totalRounds)
                 {
-                    Debug.Log("Tawaf Complete!");
-                    isMoving = false;
-
-                    if (beacon != null)
-                        beacon.SetActive(false); // Hide the beacon
-
-                    if (indicator != null)
-                        indicator.SetActive(false); // Hide the indicator
-
-                    completionPanel.SetActive(true); // Show the completion panel
+                    TawafComplete();
                 }
             }
         }
+    }
 
-        // Position the indicator above the character's head
+    void UpdateIndicatorPosition()
+    {
         if (indicator != null && character != null)
         {
-            Vector3 headPosition = character.transform.position + indicatorOffset;
-            indicator.transform.position = headPosition;
-
-            // Ensure the indicator is active
-            if (!indicator.activeSelf)
-            {
-                indicator.SetActive(true);
-            }
+            indicator.transform.position = character.transform.position + indicatorOffset;
         }
     }
 
-    bool IsCharacterInsideBeacon()
+    void UpdateRoundText()
     {
-        // Check if the character is within the beacon's radius
-        if (beacon != null && character != null)
+        if (roundText != null)
         {
-            float distance = Vector3.Distance(character.transform.position, beacon.transform.position);
-            Debug.Log("Distance to Beacon: " + distance);
-            return distance <= beaconRadius;
+            roundText.text = "Rounds: " + currentRound + " / " + totalRounds;
+            Debug.Log("Round text updated: " + roundText.text);
         }
-        return false;
     }
 
-    public void CloseCompletionPanel()
+    void TawafComplete()
     {
-        // Close the completion panel and show the final options panel
-        completionPanel.SetActive(false);
-        finalOptionsPanel.SetActive(true);
-    }
+        Debug.Log("Tawaf Completed!");
+        tawafCompleted = true;
+        isMoving = false;
 
-    // Button functions for final options
-    public void GoHome()
-    {
-        SceneManager.LoadScene("HomeScene");
+        if (indicator != null) indicator.SetActive(false);
+        if (completionPanel != null) completionPanel.SetActive(false); // Ensure it's hidden
+        if (finalPanel != null) finalPanel.SetActive(true);
     }
 
     public void RestartScene()
@@ -128,7 +148,12 @@ public class TawafManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void CloseScene()
+    public void GoHome()
+    {
+        SceneManager.LoadScene("HomeScene");
+    }
+
+    public void ExitGame()
     {
         Application.Quit();
     }

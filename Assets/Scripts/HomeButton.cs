@@ -1,11 +1,12 @@
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class HomeButton : MonoBehaviour
 {
     public void OnHomeButtonClick()
     {
+        Debug.Log("Current Main Level: " + GameData.CurrentMainLevel); // Debug log for checking
+
         if (GameData.CurrentMainLevel == "Hajj")
         {
             SceneManager.LoadScene("HajjScene");
