@@ -42,10 +42,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/QuizUmmrah.unity
     guid: fd94745a49badc044a2d71993aa119ea
   - enabled: 1
-    path: Assets/Scenes/Jamaraatscene.unity
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/Jamaraatscene.unity
     guid: 83fd44c2ebc4bf84790bcb7161163775
   - enabled: 1
-    path: Assets/Scenes/Safamarwa.unity
+    path: Assets/Scenes/Mountain Terrain rocks and tree/AllScenes/Safamarwa.unity
     guid: e8fa00fba3c315b46b9775922f20d5f5
   - enabled: 1
     path: Assets/Scenes/Halq.unity

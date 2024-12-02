@@ -41615,8 +41615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ad983444b8bd341ad500bfd9b53201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1782070287}
-  offset: {x: 0.95, y: 18.6, z: 8.45}
 --- !u!114 &1497807324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41629,8 +41627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842603a4e7001654d913fe092d86b95f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
-  playerBody: {fileID: 1782070288}
 --- !u!114 &1497807325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44725,10 +44721,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424436437}
-        m_TargetAssemblyTypeName: ArafatController, Assembly-CSharp
-        m_MethodName: OnCloseArafatInfoPanel
-        m_Mode: 1
+      - m_Target: {fileID: 2057546949}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -47646,11 +47642,11 @@ PrefabInstance:
       objectReference: {fileID: 731859058}
     - target: {fileID: 6391198444397700663, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
       propertyPath: runSpeed
-      value: 312.4
+      value: 316.5
       objectReference: {fileID: 0}
     - target: {fileID: 6391198444397700663, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
       propertyPath: walkSpeed
-      value: 122.5
+      value: 144.7
       objectReference: {fileID: 0}
     - target: {fileID: 6391198444397700663, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
       propertyPath: cinemachineCamera
@@ -47660,16 +47656,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerBody
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 299993973019735944, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 664976676776892947, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1782070291}
   m_SourcePrefab: {fileID: 100100000, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
---- !u!4 &1782070287 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 787467180076022137, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
-  m_PrefabInstance: {fileID: 1782070286}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1782070288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4956385160748497709, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
@@ -47685,6 +47680,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 118911731539239875, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
   m_PrefabInstance: {fileID: 1782070286}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1782070291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782070289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39596d7d2938e741949bbf7a909c7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 1907079701}
+  rotationSpeed: 0
+  movementSpeed: 6
+  arrivalThreshold: 1.5
+  indicator: {fileID: 1782070289}
 --- !u!1001 &1785451192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50790,9 +50803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f259d23d0a3b64c937758d9f6a4f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wazuMessage: {fileID: 2103486329}
-  indicator: {fileID: 1782070289}
-  beacon: {fileID: 1907079697}
+  wazuMessageUI: {fileID: 2057546949}
+  indicatorObject: {fileID: 1782070289}
+  beaconObject: {fileID: 1907079697}
 --- !u!33 &1907079700
 MeshFilter:
   m_ObjectHideFlags: 0

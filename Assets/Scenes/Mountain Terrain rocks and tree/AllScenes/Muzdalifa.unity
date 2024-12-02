@@ -17215,9 +17215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f259d23d0a3b64c937758d9f6a4f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wazuMessage: {fileID: 650937328}
-  indicator: {fileID: 0}
-  beacon: {fileID: 791204269}
+  wazuMessageUI: {fileID: 650937328}
+  indicatorObject: {fileID: 616762965}
+  beaconObject: {fileID: 791204269}
 --- !u!64 &791204272
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41357,8 +41357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842603a4e7001654d913fe092d86b95f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
-  playerBody: {fileID: 455271973}
 --- !u!114 &1800332053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41371,8 +41369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ad983444b8bd341ad500bfd9b53201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 455271973}
-  offset: {x: 0.95, y: 18.6, z: 8.45}
 --- !u!114 &1800332054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41680,9 +41676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f259d23d0a3b64c937758d9f6a4f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wazuMessage: {fileID: 47261716}
-  indicator: {fileID: 0}
-  beacon: {fileID: 1809731654}
+  wazuMessageUI: {fileID: 47261716}
+  indicatorObject: {fileID: 616762965}
+  beaconObject: {fileID: 1809731654}
 --- !u!1 &1810842023
 GameObject:
   m_ObjectHideFlags: 0

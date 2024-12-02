@@ -1107,9 +1107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f259d23d0a3b64c937758d9f6a4f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wazuMessage: {fileID: 1307475248}
-  indicator: {fileID: 0}
-  beacon: {fileID: 106174007}
+  wazuMessageUI: {fileID: 1307475248}
+  indicatorObject: {fileID: 1742702043}
+  beaconObject: {fileID: 106174007}
 --- !u!4 &106174011
 Transform:
   m_ObjectHideFlags: 0
@@ -7688,7 +7688,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 664976676776892947, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1742702048}
   m_SourcePrefab: {fileID: 100100000, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
 --- !u!1 &848282701
 GameObject:
@@ -15868,6 +15871,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 664976676776892947, guid: cd652a5543b3a104f871d9f399fd7acc, type: 3}
   m_PrefabInstance: {fileID: 835844336}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1742702048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742702043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39596d7d2938e741949bbf7a909c7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 106174011}
+  rotationSpeed: 0
+  movementSpeed: 6
+  arrivalThreshold: 1.5
+  indicator: {fileID: 1742702043}
 --- !u!1001 &1743375424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16821,8 +16842,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842603a4e7001654d913fe092d86b95f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
-  playerBody: {fileID: 1329958975}
 --- !u!114 &1839857349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16835,8 +16854,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ad983444b8bd341ad500bfd9b53201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 928469947}
-  offset: {x: 0.95, y: 18.6, z: 8.45}
 --- !u!1 &1841816576
 GameObject:
   m_ObjectHideFlags: 0

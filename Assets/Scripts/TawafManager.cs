@@ -29,14 +29,28 @@ public class TawafManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start method executed.");
+
         // Initialize UI and objects
-        kabainfoPanel.SetActive(true);
-        completionPanel.SetActive(false);
-        finalPanel.SetActive(false);
+        if (kabainfoPanel != null)
+            kabainfoPanel.SetActive(true);
+        else
+            Debug.LogError("kabainfoPanel is not assigned in the Inspector.");
+
+        if (completionPanel != null)
+            completionPanel.SetActive(false);
+        else
+            Debug.LogError("completionPanel is not assigned in the Inspector.");
+
+        if (finalPanel != null)
+            finalPanel.SetActive(false);
+        else
+            Debug.LogError("finalPanel is not assigned in the Inspector.");
 
         if (indicator != null)
         {
             indicator.SetActive(false);
+            Debug.Log("Indicator initialized as inactive.");
         }
         else
         {
@@ -46,6 +60,7 @@ public class TawafManager : MonoBehaviour
         if (roundText != null)
         {
             roundText.text = "Rounds: 0 / " + totalRounds;
+            Debug.Log("Round text initialized: " + roundText.text);
         }
         else
         {
@@ -55,7 +70,12 @@ public class TawafManager : MonoBehaviour
 
     public void CloseInfoPanel()
     {
-        kabainfoPanel.SetActive(false);
+        Debug.Log("CloseInfoPanel called.");
+        if (kabainfoPanel != null)
+            kabainfoPanel.SetActive(false);
+        else
+            Debug.LogError("kabainfoPanel is not assigned.");
+
         isMoving = true;
 
         if (indicator != null)
@@ -119,7 +139,9 @@ public class TawafManager : MonoBehaviour
     {
         if (indicator != null && character != null)
         {
-            indicator.transform.position = character.transform.position + indicatorOffset;
+            Vector3 newPosition = character.transform.position + indicatorOffset;
+            indicator.transform.position = newPosition;
+            Debug.Log("Indicator position updated to: " + newPosition);
         }
     }
 
@@ -138,23 +160,40 @@ public class TawafManager : MonoBehaviour
         tawafCompleted = true;
         isMoving = false;
 
-        if (indicator != null) indicator.SetActive(false);
-        if (completionPanel != null) completionPanel.SetActive(false); // Ensure it's hidden
-        if (finalPanel != null) finalPanel.SetActive(true);
+        if (indicator != null)
+        {
+            indicator.SetActive(false);
+            Debug.Log("Indicator deactivated.");
+        }
+
+        if (completionPanel != null)
+        {
+            completionPanel.SetActive(false); // Ensure it's hidden
+            Debug.Log("Completion panel deactivated.");
+        }
+
+        if (finalPanel != null)
+        {
+            finalPanel.SetActive(true);
+            Debug.Log("Final panel activated.");
+        }
     }
 
     public void RestartScene()
     {
+        Debug.Log("Restarting scene.");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void GoHome()
     {
+        Debug.Log("Going to HomeScene.");
         SceneManager.LoadScene("HomeScene");
     }
 
     public void ExitGame()
     {
+        Debug.Log("Exiting game.");
         Application.Quit();
     }
 }
